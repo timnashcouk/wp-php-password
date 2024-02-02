@@ -36,4 +36,4 @@ function my_password_options( $options ){
 add_filter( 'wp_hash_password_options', 'my_password_options');
 ```
 ## Changelog
-See [CHANGELOG.md]https://github.com/timnashcouk/wp-php-password/blob/main/CHANGELOG.md) for notable changes per version.
+See [CHANGELOG.md](https://github.com/timnashcouk/wp-php-password/blob/main/CHANGELOG.md) for notable changes per version.
