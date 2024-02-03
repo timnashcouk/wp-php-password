@@ -27,7 +27,7 @@ if ( ! function_exists( 'wp_check_password' ) ) {
 	 * @return bool
 	 */
 	function wp_check_password( $password, $hash, $user_id = '' ) {
-		if ( ! password_needs_rehash( $hash, PASSWORD_DEFAULT, apply_filters( 'wp_hash_password_options', array() ) ) ) {
+		if ( ! password_needs_rehash( $hash, apply_filters( 'wp_php_hash_password_algorithm', PASSWORD_DEFAULT ), apply_filters( 'wp_hash_password_options', array() ) ) ) {
 			return apply_filters(
 				'check_password',
 				password_verify( $password, $hash ),
