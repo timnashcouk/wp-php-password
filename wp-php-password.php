@@ -5,11 +5,13 @@
  * Description: Replaces wp_hash_password and wp_check_password with password_hash and password_verify.
  * Author:      Tim Nash
  * Author URI:  https://timnash.co.uk
- * Version:     1.0.1
+ * Version:     1.0.0
  * Licence:     MIT
  *
  * @package wp-php-password
  */
+
+$wp_php_password_error = null;
 
 if ( ! function_exists( 'wp_check_password' ) ) {
 	/**
@@ -56,6 +58,8 @@ if ( ! function_exists( 'wp_check_password' ) ) {
 			$user_id
 		);
 	}
+} elseif ( ! is_object( $wp_php_password_error ) ) {
+		$wp_php_password_error = new WP_Error( 'wp_php_password', __( 'WP PHP Password is active but something else is overrding password functions.', 'wp-php-password' ) );
 }
 
 if ( ! function_exists( 'wp_hash_password' ) ) {
@@ -76,6 +80,8 @@ if ( ! function_exists( 'wp_hash_password' ) ) {
 			apply_filters( 'wp_hash_password_options', array() )
 		);
 	}
+} elseif ( ! is_wp_error( $wp_php_password_error ) ) {
+		$wp_php_password_error = new WP_Error( 'wp_php_password', __( 'WP PHP Password is active but something else is overrding password functions.', 'wp-php-password' ) );
 }
 
 if ( ! function_exists( 'wp_set_password' ) ) {
@@ -144,4 +150,18 @@ if ( ! function_exists( 'wp_set_password' ) ) {
 
 		return $hash;
 	}
+} elseif ( ! is_wp_error( $wp_php_password_error ) ) {
+		$wp_php_password_error = new WP_Error( 'wp_php_password', __( 'WP PHP Password is active but something else is overrding password functions.', 'wp-php-password' ) );
+}
+
+if ( is_wp_error( $wp_php_password_error ) ) {
+	add_action(
+		'all_admin_notices',
+		function () use ( $wp_php_password_error ): void {
+			printf(
+				'<div class="notice notice-error is-dismissible"><p>%s</p></div>',
+				esc_html( $wp_php_password_error->get_error_message() )
+			);
+		}
+	);
 }
