@@ -5,7 +5,7 @@
  * Description: Replaces wp_hash_password and wp_check_password with password_hash and password_verify.
  * Author:      Tim Nash
  * Author URI:  https://timnash.co.uk
- * Version:     1.0.0
+ * Version:     1.0.1
  * Licence:     MIT
  *
  * @package wp-php-password
@@ -26,7 +26,7 @@ if ( ! function_exists( 'wp_check_password' ) ) {
 	 * @param  string|int $user_id  The optional user ID.
 	 * @return bool
 	 */
-	function wp_check_password( $password, $hash, $user_id = '' ) {
+	function wp_check_password( string $password, string $hash, int|string $user_id = '' ): bool {
 		if ( ! password_needs_rehash( $hash, apply_filters( 'wp_php_hash_password_algorithm', PASSWORD_DEFAULT ), apply_filters( 'wp_hash_password_options', array() ) ) ) {
 			return apply_filters(
 				'check_password',
@@ -68,7 +68,7 @@ if ( ! function_exists( 'wp_hash_password' ) ) {
 	 * @param  string $password The password in plain text.
 	 * @return string
 	 */
-	function wp_hash_password( $password ) {
+	function wp_hash_password( string $password ): string {
 
 		return password_hash(
 			$password,
@@ -86,7 +86,7 @@ if ( ! function_exists( 'wp_set_password' ) ) {
 	 * @param  int    $user_id  The user ID.
 	 * @return string
 	 */
-	function wp_set_password( $password, $user_id ) {
+	function wp_set_password( string $password, int $user_id ): string {
 		$hash           = wp_hash_password( $password );
 		$is_api_request = apply_filters(
 			'application_password_is_api_request',
@@ -112,13 +112,13 @@ if ( ! function_exists( 'wp_set_password' ) ) {
 		}
 
 		if ( ! class_exists( 'WP_Application_Passwords' ) ) {
-			return;
+			return '';
 		}
 
 		$passwords = WP_Application_Passwords::get_user_application_passwords( $user_id );
 
 		if ( empty( $passwords ) ) {
-			return;
+			return '';
 		}
 
 		global $wp_hasher;
