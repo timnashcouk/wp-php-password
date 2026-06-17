@@ -1,4 +1,8 @@
 # WP PHP Password
+
+ [!CAUTION]
+> WordPress since 6.8 has supported Bcrypt and extended support for Argon password, this repo remains active as it is being used by folks using ClassicPress and non 6.x.x branch.
+
 Basic Replacement for WordPress Built in Passwords forked from Roots [Password Bcrypt](https://github.com/roots/wp-password-bcrypt/)
 
 This plugin replaces the default Password hasher PHPass used by WordPress with native PHP hashing functions allowing it to take advantage of improved algorithms like Bcrypt and Argon2.
