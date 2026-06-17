@@ -1,6 +1,6 @@
 # WP PHP Password
 
- [!CAUTION]
+> [!CAUTION]
 > WordPress since 6.8 has supported Bcrypt and extended support for Argon password, this repo remains active as it is being used by folks using ClassicPress and non 6.x.x branch.
 
 Basic Replacement for WordPress Built in Passwords forked from Roots [Password Bcrypt](https://github.com/roots/wp-password-bcrypt/)
